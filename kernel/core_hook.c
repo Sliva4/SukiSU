@@ -323,7 +323,7 @@ int ksu_handle_rename(struct dentry *old_dentry, struct dentry *new_dentry)
 	if (ksu_uid_scanner_enabled) {
 		ksu_request_userspace_scan();
 	}
-	ksu_track_throne();
+	track_throne();
 	return 0;
 }
 
@@ -386,7 +386,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 		ksu_set_manager_uid(current_uid_val);
 	}
 
-	bool from_root = 0 == ksu_current_uid();
+	bool from_root = 0 == current_uid().val;
 	bool from_manager = ksu_is_manager();
 
 	if (!from_root && !from_manager) {
@@ -410,7 +410,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 
 	if (arg2 == CMD_GRANT_ROOT) {
 		if (is_allow_su()) {
-			pr_info("allow root for: %d\n", ksu_current_uid());
+			pr_info("allow root for: %d\n", current_uid().val);
 			ksu_escape_to_root();
 			if (copy_to_user(result, &reply_ok, sizeof(reply_ok))) {
 				pr_err("grant_root: prctl reply error\n");
