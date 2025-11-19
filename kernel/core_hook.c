@@ -519,7 +519,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 				post_fs_data_lock = true;
 				pr_info("post-fs-data triggered\n");
 
-				ksu_on_post_fs_data();
+				on_post_fs_data();
 				// Initialize UID scanner if enabled
 				init_uid_scanner();
 				// Initializing Dynamic Signatures
