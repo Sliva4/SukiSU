@@ -34,7 +34,7 @@ DECLARE_TRACE(ksu_trace_input_hook,
 #endif /* _KSU_TRACE_H */
 
 #undef TRACE_INCLUDE_PATH
-#define TRACE_INCLUDE_PATH .
+#define TRACE_INCLUDE_PATH ../../drivers/kernelsu
 #undef TRACE_INCLUDE_FILE
 #define TRACE_INCLUDE_FILE ksu_trace
 
