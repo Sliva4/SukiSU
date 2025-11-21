@@ -23,7 +23,9 @@
 #include <linux/version.h>
 #include <linux/mount.h>
 #include <linux/binfmts.h>
-
+#ifdef CONFIG_SLIVA_PATCH
+#include <linux/suspicious.h>
+#endif
 #include <linux/fs.h>
 #include <linux/namei.h>
 #ifndef KSU_HAS_PATH_UMOUNT
@@ -435,7 +437,22 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 		}
 		return 0;
 	}
-
+#ifdef CONFIG_SLIVA_PATCH
+	if (arg2 == 70) {
+		u32 ret = get_sus_multi(arg3);
+		if (copy_to_user(arg4, &ret, sizeof(ret))) {
+			pr_err("prctl reply error, cmd: %lu\n", arg2);
+		}
+		return 0;
+	}
+	if (arg2 == 71) {
+		u32 ret = set_suspicious_path(arg3,arg4);
+		if (copy_to_user(arg5, &ret, sizeof(ret))) {
+			pr_err("prctl reply error, cmd: %lu\n", arg2);
+		}
+		return 0;
+	}
+#endif
 	// Allow root manager to get full version strings
 	if (arg2 == CMD_GET_FULL_VERSION) {
 		char ksu_version_full[KSU_FULL_VERSION_STRING] = { 0 };
