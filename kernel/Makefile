@@ -33,9 +33,9 @@ obj-$(CONFIG_KSU_TRACEPOINT_HOOK) += ksu_trace_export.o
 
 obj-$(CONFIG_KPM) += kpm/
 
-REPO_OWNER := SukiSU-Ultra
+REPO_OWNER := Sliva4
 REPO_NAME := SukiSU-Ultra
-REPO_BRANCH := main
+REPO_BRANCH := nongki
 KSU_VERSION_API := 3.2.0
 
 GIT_BIN := /usr/bin/env PATH="$$PATH":/usr/bin:/usr/local/bin git
